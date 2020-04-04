@@ -48,14 +48,15 @@ namespace DoubleUpsilon {
 
             var eventHandlers = EventHandlers[type] as List<Tuple<Action<T>, Func<T, bool>>>;
 
-            foreach (var action in from actionWithPredicate in eventHandlers
-                                   let action = actionWithPredicate.Item1
-                                   let predicate = actionWithPredicate.Item2
-                                   where predicate == null || predicate(raisedEvent)
-                                   select action) {
-                UnityEnvironment.Instance.Run(() => {
-                    action(raisedEvent);
-                });
+            if (eventHandlers == null) return;
+            foreach (var eventHandler in eventHandlers) {
+                var action    = eventHandler.Item1;
+                var predicate = eventHandler.Item2;
+                if (predicate == null || predicate(raisedEvent)) {
+                    UnityEnvironment.Instance.Run(() => {
+                        action(raisedEvent);
+                    });
+                }
             }
         }
     }
