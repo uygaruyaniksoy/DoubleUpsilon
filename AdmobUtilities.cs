@@ -1,3 +1,4 @@
+#if false
 using GoogleMobileAds.Api;
 
 namespace DoubleUpsilon {
@@ -31,3 +32,4 @@ namespace DoubleUpsilon {
         }
     }
 }
+#endif
